@@ -12,6 +12,7 @@ public class StrictBankAccountImpl implements BankAccount {
     private double balance;
     private int nTransactions;
     private final int nMaxATMTransactions;
+    private int nATMTransactions = 0;
     private static final double ATM_TRANSACTION_FEE = 1;
     private static final double MANAGEMENT_FEE = 5;
     private static final double TRANSACTION_FEE = 0.1;
@@ -63,9 +64,9 @@ public class StrictBankAccountImpl implements BankAccount {
      * @throws TransactionsOverQuotaException
      */
     public void depositFromATM(final int usrID, final double amount) throws WrongAccountHolderException,TransactionsOverQuotaException {
-        if (nTransactions < nMaxATMTransactions) {
+        if (this.nATMTransactions < this.nMaxATMTransactions) {
             this.deposit(usrID, amount - StrictBankAccountImpl.ATM_TRANSACTION_FEE);
-            incTransactions();
+            incATMTransactions();
         }
         else {
         	throw new TransactionsOverQuotaException(this.nMaxATMTransactions);
@@ -80,9 +81,9 @@ public class StrictBankAccountImpl implements BankAccount {
      * @throws TransactionsOverQuotaException
      */
     public void withdrawFromATM(final int usrID, final double amount) throws WrongAccountHolderException,NotEnoughFoundsException,TransactionsOverQuotaException  {
-        if (nTransactions < nMaxATMTransactions) {
+        if (this.nATMTransactions < this.nMaxATMTransactions) {
             this.withdraw(usrID, amount + StrictBankAccountImpl.ATM_TRANSACTION_FEE);
-            incTransactions();
+            incATMTransactions();
         }
         else {
         	throw new TransactionsOverQuotaException(this.nMaxATMTransactions);
@@ -131,8 +132,12 @@ public class StrictBankAccountImpl implements BankAccount {
     	}
     	return true;
     }
+    
+    private void incATMTransactions() {
+    	this.nATMTransactions++;
+    }
 
     private void incTransactions() {
-        nTransactions++;
+        this.nTransactions++;
     }
 }
