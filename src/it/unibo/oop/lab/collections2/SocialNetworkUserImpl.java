@@ -78,12 +78,9 @@ public class SocialNetworkUserImpl<U extends User> extends UserImpl implements S
     	if (friendsGroupMap.containsKey(circle)) {
     		return friendsGroupMap.get(circle).add(user);
     	}
-    	else {
-    		HashSet<U> friendSet = new HashSet<U>();
-    		friendsGroupMap.put(circle, friendSet);
-    		friendSet.add(user);
-    		return true;
-    	}
+    	HashSet<U> friendSet = new HashSet<U>();
+		friendsGroupMap.put(circle, friendSet);
+		return friendSet.add(user);
     }
 
     @Override
