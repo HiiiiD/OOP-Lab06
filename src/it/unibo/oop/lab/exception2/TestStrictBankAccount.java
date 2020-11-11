@@ -1,5 +1,7 @@
 package it.unibo.oop.lab.exception2;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Test;
 
 /**
@@ -38,25 +40,25 @@ public class TestStrictBankAccount {
     	try {
 			bankAcc1.withdrawFromATM(1, 1);
 		} catch (TransactionsOverQuotaException e) {
-			System.out.println(e.getMessage());
+			assertNotNull(e);
 		}
     	//Same for bankAcc2
     	try {
 			bankAcc2.withdrawFromATM(2, 1);
 		} catch (TransactionsOverQuotaException e) {
-			System.out.println(e.getMessage());
+			assertNotNull(e);
 		}
     	//Wrong account holder
     	try {
 			bankAcc1.withdraw(2, 1);
 		} catch (WrongAccountHolderException e) {
-			System.out.println(e.getMessage());
+			assertNotNull(e);
 		}
     	//Not enough founds to withdraw
     	try {
 			bankAcc1.withdraw(1, 10000);
 		} catch (NotEnoughFoundsException e) {
-			System.out.println(e.getMessage());
+			assertNotNull(e);
 		}
     	
     }
